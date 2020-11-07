@@ -1,3 +1,13 @@
+.gradle
+/local.properties
+
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
 # Built application files
 *.apk
 *.aar
@@ -6,9 +16,6 @@
 
 # Files for the ART/Dalvik VM
 *.dex
-
-# Java class files
-*.class
 
 # Generated files
 bin/
@@ -44,6 +51,12 @@ captures/
 .idea/assetWizardSettings.xml
 .idea/dictionaries
 .idea/libraries
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
 # Android Studio 3 in .gitignore file.
 .idea/caches
 .idea/modules.xml

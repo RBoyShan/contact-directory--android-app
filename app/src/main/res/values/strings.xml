@@ -1,3 +1,46 @@
 <resources>
+    <!-- Main Strings -->
     <string name="app_name">contact-directory</string>
+    <string name="add_contact">add-contact</string>
+
+    <!-- Messages -->
+    <string name="success_message">Success!</string>
+    <string name="error_message">Error!</string>
+    <string name="incorrect_phone_message">Incorrect phone number!</string>
+    <string name="incorrect_email_message">Invalid email!</string>
+    <string name="empty_name_message">Name empty!</string>
+    <string name="not_unique_name_message">Not unique name!</string>
+
+    <!-- Titles -->
+    <string name="title_activity_contact_directory">ContactDirectory</string>
+    <string name="title_app_name">Contact Directory</string>
+
+    <!-- Buttons -->
+    <string name="button_main">Get Started</string>
+    <string name="button_contact_form">Add Contact</string>
+
+    <!-- Image descriptions -->
+    <string name="description_form_user_name_ic">Contact form username</string>
+    <string name="description_form_user_phone_ic">Contact form phone</string>
+    <string name="description_form_user_email_ic">Contact form email</string>
+
+    <!-- Hints -->
+    <string name="hint_user_name">Enter name</string>
+    <string name="hint_user_phone">Enter phone</string>
+    <string name="hint_user_email">Enter email (optional)</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_new_contact_form">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+
 </resources>

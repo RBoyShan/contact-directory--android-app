@@ -1,9 +1,12 @@
-package com.example.contact_directory;
+package com.example.contact_directory.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.contact_directory.R;
+import com.example.contact_directory.entity.Contact;
 
 import java.util.ArrayList;
 

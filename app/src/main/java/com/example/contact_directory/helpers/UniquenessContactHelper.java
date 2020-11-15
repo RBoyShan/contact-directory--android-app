@@ -1,4 +1,6 @@
-package com.example.contact_directory;
+package com.example.contact_directory.helpers;
+
+import com.example.contact_directory.entity.Contact;
 
 import java.util.ArrayList;
 

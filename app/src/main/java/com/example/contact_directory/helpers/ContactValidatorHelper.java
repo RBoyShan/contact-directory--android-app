@@ -1,11 +1,11 @@
-package com.example.contact_directory;
+package com.example.contact_directory.helpers;
 
 import android.text.TextUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class ContactValidatorHelper {
+public class ContactValidatorHelper {
     public static boolean isValidEmail(String email) {
         if(ContactValidatorHelper.isNullOrEmpty(email)) {
             return true;

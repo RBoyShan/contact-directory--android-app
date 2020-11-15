@@ -1,4 +1,4 @@
-package com.example.contact_directory;
+package com.example.contact_directory.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,12 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.contact_directory.helpers.ContactValidatorHelper;
+import com.example.contact_directory.R;
+import com.example.contact_directory.helpers.UniquenessContactHelper;
+import com.example.contact_directory.entity.Contact;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 public class NewContactForm extends AppCompatActivity {
     private View baseView;
+
+    TextView nameField;
+    TextView phoneField;
+    TextView emailField;
 
     private ArrayList<Contact> contacts;
     private int currentIndex = -1;
@@ -30,13 +38,15 @@ public class NewContactForm extends AppCompatActivity {
     }
 
     private void initActivity () {
-        this.initBackButton();
-        this.initSubmitButton();
         this.getContacts();
 
         if(this.getDataIndex()) {
             this.setValueData(this.contacts.get(this.currentIndex));
         }
+
+        this.initFormFirlds();
+        this.initBackButton();
+        this.initSubmitButton();
     }
 
     private void initBackButton() {
@@ -77,6 +87,12 @@ public class NewContactForm extends AppCompatActivity {
         return this.isEdit;
     }
 
+    private void initFormFirlds() {
+        this.nameField = this.findViewById(R.id.contactFormAbonentName);
+        this.phoneField = this.findViewById(R.id.contactFormAbonentPhone);
+        this.emailField = this.findViewById(R.id.contactFormAbonentEmailAddress);
+    }
+
     private void setValueData(Contact contact) {
         TextView name = this.findViewById(R.id.contactFormAbonentName);
         name.setText(contact.getName());
@@ -84,16 +100,17 @@ public class NewContactForm extends AppCompatActivity {
         TextView phone = this.findViewById(R.id.contactFormAbonentPhone);
         phone.setText(contact.getPhone());
 
-        TextView email = this.findViewById(R.id.contactFormAbonentEmailAddress);;
-        email.setText(contact.getPhone());
+        TextView email = this.findViewById(R.id.contactFormAbonentEmailAddress);
+        email.setText(contact.getEmail());
     }
 
     private Contact getNewContact() {
-        TextView name = this.findViewById(R.id.contactFormAbonentName);
-        TextView phone = this.findViewById(R.id.contactFormAbonentPhone);
-        TextView email = this.findViewById(R.id.contactFormAbonentEmailAddress);;
-
-        return new Contact(name.getText().toString(), phone.getText().toString(), email.getText().toString());
+        return new Contact(
+                this.nameField.getText().toString(),
+                this.phoneField.getText().toString(),
+                this.emailField.getText().toString(),
+                Contact.idCounter
+        );
     }
 
     private boolean validateForm(Contact contact) {
@@ -103,7 +120,7 @@ public class NewContactForm extends AppCompatActivity {
             return false;
         }
 
-        if (UniquenessContactHelper.isContactsHasName(this.contacts, contact.getName())) {
+        if (UniquenessContactHelper.isContactsHasName(this.contacts, contact.getName()) && !this.isEdit) {
             Snackbar.make(this.baseView, R.string.not_unique_name_message , Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return false;
@@ -129,8 +146,13 @@ public class NewContactForm extends AppCompatActivity {
     }
 
     private void editContact(Contact contact) {
-        this.contacts.remove(this.currentIndex);
-        this.contacts.set(this.currentIndex, contact);
+        String newName = this.nameField.getText().toString();
+        String newPhone = this.phoneField.getText().toString();
+        String newEmail = this.emailField.getText().toString();
+
+        this.contacts.get(this.currentIndex).setName(newName);
+        this.contacts.get(this.currentIndex).setPhone(newPhone);
+        this.contacts.get(this.currentIndex).setEmail(newEmail);
     }
 
     private void redirectToContactList() {

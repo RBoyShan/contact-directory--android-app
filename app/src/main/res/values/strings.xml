@@ -18,6 +18,7 @@
     <!-- Buttons -->
     <string name="button_main">Get Started</string>
     <string name="button_contact_form">Add Contact</string>
+    <string name="button_change_avatar">Change Avatar</string>
 
     <!-- Image descriptions -->
     <string name="description_form_user_name_ic">Contact form username</string>

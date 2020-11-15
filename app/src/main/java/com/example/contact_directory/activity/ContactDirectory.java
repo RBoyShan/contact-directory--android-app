@@ -1,22 +1,24 @@
-package com.example.contact_directory;
+package com.example.contact_directory.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.contact_directory.R;
+import com.example.contact_directory.adapters.RecyclerViewAdapter;
+import com.example.contact_directory.entity.Contact;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class ContactDirectory extends AppCompatActivity {
 
     private ArrayList<Contact> contacts;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,15 @@ public class ContactDirectory extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        this.contacts = new ArrayList<>();
+
         this.initActivity();
     }
 
     private void initActivity () {
-        this.initCreateContactFab();
         this.getContacts();
+        this.initRecyclerView();
+        this.initCreateContactFab();
     }
 
     private void initCreateContactFab() {
@@ -39,6 +44,14 @@ public class ContactDirectory extends AppCompatActivity {
             createContactIntent.putParcelableArrayListExtra("Contacts", this.contacts);
             startActivity(createContactIntent);
         });
+    }
+
+    private void initRecyclerView() {
+        this.adapter = new RecyclerViewAdapter(this, this.contacts);
+
+        this.recyclerView = this.findViewById(R.id.contactsRecyclerView);
+        this.recyclerView.setAdapter(adapter);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void getContacts() {

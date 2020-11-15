@@ -7,7 +7,7 @@
     android:layout_centerHorizontal="true"
     android:layout_gravity="center|center_vertical"
     android:theme="@style/Theme.Contactdirectory"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <TextView
         android:id="@+id/textAppName"

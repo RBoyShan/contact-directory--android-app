@@ -18,9 +18,9 @@ import java.util.ArrayList;
 public class NewContactForm extends AppCompatActivity {
     private View baseView;
 
-    TextView nameField;
-    TextView phoneField;
-    TextView emailField;
+    private TextView nameField;
+    private TextView phoneField;
+    private TextView emailField;
 
     private ArrayList<Contact> contacts;
     private int currentIndex = -1;
@@ -44,7 +44,7 @@ public class NewContactForm extends AppCompatActivity {
             this.setValueData(this.contacts.get(this.currentIndex));
         }
 
-        this.initFormFirlds();
+        this.initFormFields();
         this.initBackButton();
         this.initSubmitButton();
     }
@@ -87,7 +87,7 @@ public class NewContactForm extends AppCompatActivity {
         return this.isEdit;
     }
 
-    private void initFormFirlds() {
+    private void initFormFields() {
         this.nameField = this.findViewById(R.id.contactFormAbonentName);
         this.phoneField = this.findViewById(R.id.contactFormAbonentPhone);
         this.emailField = this.findViewById(R.id.contactFormAbonentEmailAddress);
@@ -146,13 +146,9 @@ public class NewContactForm extends AppCompatActivity {
     }
 
     private void editContact(Contact contact) {
-        String newName = this.nameField.getText().toString();
-        String newPhone = this.phoneField.getText().toString();
-        String newEmail = this.emailField.getText().toString();
-
-        this.contacts.get(this.currentIndex).setName(newName);
-        this.contacts.get(this.currentIndex).setPhone(newPhone);
-        this.contacts.get(this.currentIndex).setEmail(newEmail);
+        this.contacts.get(this.currentIndex).setName(contact.getName());
+        this.contacts.get(this.currentIndex).setPhone(contact.getPhone());
+        this.contacts.get(this.currentIndex).setEmail(contact.getEmail());
     }
 
     private void redirectToContactList() {

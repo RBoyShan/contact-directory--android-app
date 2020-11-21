@@ -10,6 +10,12 @@
     <string name="incorrect_email_message">Invalid email!</string>
     <string name="empty_name_message">Name empty!</string>
     <string name="not_unique_name_message">Not unique name!</string>
+    <string name="confirm_action_message">Confirm action</string>
+    <string name="delete_contact_message">Delete contact?</string>
+
+    <!--Menu options-->
+    <string name="menu_option_edit">Edit Contact</string>
+    <string name="menu_option_delete">Delete Contact</string>
 
     <!-- Titles -->
     <string name="title_activity_contact_directory">ContactDirectory</string>
@@ -18,7 +24,9 @@
     <!-- Buttons -->
     <string name="button_main">Get Started</string>
     <string name="button_contact_form">Add Contact</string>
-    <string name="button_change_avatar">Change Avatar</string>
+    <string name="button_delete_contact">Delete Contact</string>
+    <string name="button_confirm">OK</string>
+    <string name="button_cancel">Cancel</string>
 
     <!-- Image descriptions -->
     <string name="description_form_user_name_ic">Contact form username</string>

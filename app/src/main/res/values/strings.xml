@@ -1,6 +1,6 @@
 <resources>
     <!-- Main Strings -->
-    <string name="app_name">contact-directory</string>
+    <string name="app_name" translatable="false">contact-directory</string>
     <string name="add_contact">add-contact</string>
 
     <!-- Messages -->
@@ -23,14 +23,14 @@
     <string name="menu_option_delete">Delete Contact</string>
 
     <!-- Titles -->
-    <string name="title_activity_contact_directory">ContactDirectory</string>
+    <string name="title_activity_contact_directory" translatable="false">ContactDirectory</string>
     <string name="title_app_name">Contact Directory</string>
 
     <!-- Buttons -->
     <string name="button_main">Get Started</string>
     <string name="button_contact_form">Add Contact</string>
     <string name="button_delete_contact">Delete Contact</string>
-    <string name="button_confirm">OK</string>
+    <string name="button_confirm" translatable="false">OK</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_login">Login</string>
     <string name="button_registration">Registration</string>
@@ -49,13 +49,13 @@
     <string name="hint_confirm_password">Password (Confirm)</string>
 
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_new_contact_form">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

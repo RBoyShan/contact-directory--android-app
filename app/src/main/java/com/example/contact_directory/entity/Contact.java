@@ -8,19 +8,18 @@ import android.text.TextUtils;
 import java.util.Objects;
 
 public class Contact implements Parcelable {
-    public static int idCounter = 1;
 
     private String name;
     private String phone;
     private String email;
-    private final int id;
+    private int id;
+    private int userID;
 
     public Contact() {
-        this("", "", "", Contact.idCounter);
+        this("", "", "", 0);
     }
 
     public Contact(String name, String phone, String email, int id) {
-        Contact.idCounter++;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -80,6 +79,18 @@ public class Contact implements Parcelable {
         return id;
     }
 
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,5 +119,16 @@ public class Contact implements Parcelable {
                 this.email,
                 String.valueOf(this.id)
         });
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", id=" + id +
+                ", userID=" + userID +
+                '}';
     }
 }

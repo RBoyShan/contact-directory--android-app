@@ -25,15 +25,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initActivity() {
-        this.initGetStartedButton();
+        this.initGetStartedLoginButton();
+        this.initGetStartedRegistrationButton();
     }
 
-    private void initGetStartedButton() {
-        findViewById(R.id.buttonStart).setOnClickListener(view -> {
-            Intent contactDirectoryIntent = new Intent(MainActivity.this, ContactDirectory.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("Contacts", this.contacts);
-            contactDirectoryIntent.putExtras(bundle);
+    private void initGetStartedLoginButton() {
+        findViewById(R.id.startLoginButton).setOnClickListener(view -> {
+            Intent contactDirectoryIntent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(contactDirectoryIntent);
+        });
+    }
+
+    private void initGetStartedRegistrationButton() {
+        findViewById(R.id.startRegistrationButton).setOnClickListener(view -> {
+            Intent contactDirectoryIntent = new Intent(MainActivity.this, RegistrationActivity.class);
             startActivity(contactDirectoryIntent);
         });
     }

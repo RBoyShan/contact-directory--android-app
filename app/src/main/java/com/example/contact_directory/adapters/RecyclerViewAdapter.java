@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.contact_directory.DB.DBHelper;
 import com.example.contact_directory.R;
 import com.example.contact_directory.activity.ContactDetailActivity;
 import com.example.contact_directory.activity.NewContactForm;
@@ -27,10 +28,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private final Context context;
     private ArrayList<Contact> contacts;
+    private DBHelper databaseHelper;
 
     public RecyclerViewAdapter(Context context, ArrayList<Contact> contacts) {
         this.context = context;
         this.contacts = contacts;
+        this.initDatabaseOpenHelper(context);
     }
 
     @NonNull
@@ -51,8 +54,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.mainLayout.setOnClickListener(view -> {
             Intent intent = new Intent(this.context, ContactDetailActivity.class);
-            intent.putParcelableArrayListExtra("Contacts", this.contacts);
-            intent.putExtra("Position", position);
+            intent.putExtra("ContactID", this.contacts.get(position).getId());
+            intent.putExtra("UserID", this.contacts.get(position).getUserID());
             context.startActivity(intent);
         });
     }
@@ -60,6 +63,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return this.contacts.size();
+    }
+
+    private void initDatabaseOpenHelper(Context context) {
+        this.databaseHelper = new DBHelper(context);
     }
 
     public class RecyclerViewAdapterHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
@@ -100,13 +107,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 switch (item.getItemId()) {
                     case R.id.context_menu_edit:
                         Intent intent = new Intent(context, NewContactForm.class);
-                        intent.putParcelableArrayListExtra("Contacts", contacts);
-                        intent.putExtra("Index", currentPosition);
+                        intent.putExtra("ContactID", contacts.get(currentPosition).getId());
+                        intent.putExtra("UserID", contacts.get(currentPosition).getUserID());
                         context.startActivity(intent);
                         break;
 
                     case R.id.context_menu_delete:
                         contacts.remove(currentPosition);
+                        databaseHelper.deleteContact(contacts.get(currentPosition).getId());
                         notifyDataSetChanged();
                         break;
                 }

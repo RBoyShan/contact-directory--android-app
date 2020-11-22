@@ -9,9 +9,14 @@
     <string name="incorrect_phone_message">Incorrect phone number!</string>
     <string name="incorrect_email_message">Invalid email!</string>
     <string name="empty_name_message">Name empty!</string>
+    <string name="empty_password_message">Password empty!</string>
     <string name="not_unique_name_message">Not unique name!</string>
     <string name="confirm_action_message">Confirm action</string>
     <string name="delete_contact_message">Delete contact?</string>
+    <string name="user_exists_message">User already exists!</string>
+    <string name="user_not_exists_message">User do not exists!</string>
+    <string name="password_confirm_error_message">Passwords do not match!</string>
+    <string name="database_error_message">Database unavailable!</string>
 
     <!--Menu options-->
     <string name="menu_option_edit">Edit Contact</string>
@@ -27,6 +32,8 @@
     <string name="button_delete_contact">Delete Contact</string>
     <string name="button_confirm">OK</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_login">Login</string>
+    <string name="button_registration">Registration</string>
 
     <!-- Image descriptions -->
     <string name="description_form_user_name_ic">Contact form username</string>
@@ -36,7 +43,10 @@
     <!-- Hints -->
     <string name="hint_user_name">Enter name</string>
     <string name="hint_user_phone">Enter phone</string>
-    <string name="hint_user_email">Enter email (optional)</string>
+    <string name="hint_user_email">Enter email (Optional)</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Password (Confirm)</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -50,6 +60,15 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 
 
 </resources>

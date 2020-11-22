@@ -1,12 +1,16 @@
 package com.example.contact_directory.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.contact_directory.DB.DBHelper;
 import com.example.contact_directory.helpers.ContactValidatorHelper;
 import com.example.contact_directory.R;
 import com.example.contact_directory.helpers.UniquenessContactHelper;
@@ -22,14 +26,19 @@ public class NewContactForm extends AppCompatActivity {
     private TextView phoneField;
     private TextView emailField;
 
-    private ArrayList<Contact> contacts;
-    private int currentIndex = -1;
+    private Contact contact;
+    private int contactId = -1;
     private boolean isEdit;
+
+    private DBHelper databaseHelper;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_contact_form3);
+
+        this.contact = new Contact();
 
         this.isEdit = false;
         this.baseView = this.findViewById(R.id.contactFormView);
@@ -38,10 +47,9 @@ public class NewContactForm extends AppCompatActivity {
     }
 
     private void initActivity () {
-        this.getContacts();
-
         if(this.getDataIndex()) {
-            this.setValueData(this.contacts.get(this.currentIndex));
+            this.contact = this.getContactById(this.contactId);
+            this.setValueData(this.contact);
         }
 
         this.initFormFields();
@@ -57,7 +65,7 @@ public class NewContactForm extends AppCompatActivity {
 
     private void initSubmitButton() {
         this.findViewById(R.id.createContactButton).setOnClickListener(view -> {
-            Contact contact = getNewContact();
+            this.setContactDataFromForm();
 
             if(!contact.isNotEmptyObject()) {
                 return;
@@ -65,23 +73,22 @@ public class NewContactForm extends AppCompatActivity {
 
             if(this.validateForm(contact)) {
                 if(this.isEdit)  {
-                    this.editContact(contact);
+                    this.editContact(this.contact);
                 } else {
-                    this.addContact(contact);
+                    this.addContact(this.contact);
                 }
                 this.redirectToContactList();
             }
         });
     }
 
-    private void getContacts() {
-        this.contacts = getIntent().getParcelableArrayListExtra("Contacts");
-    }
-
     private boolean getDataIndex() {
-        this.currentIndex = getIntent().getIntExtra("Index", -1);
+        Intent intent = getIntent();
 
-        if(this.currentIndex >= 0)
+        this.userId = intent.getIntExtra("UserID", -1);
+        this.contactId = intent.getIntExtra("ContactID", -1);
+
+        if(this.contactId >= 0)
             this.isEdit = true;
 
         return this.isEdit;
@@ -104,35 +111,36 @@ public class NewContactForm extends AppCompatActivity {
         email.setText(contact.getEmail());
     }
 
-    private Contact getNewContact() {
-        return new Contact(
-                this.nameField.getText().toString(),
-                this.phoneField.getText().toString(),
-                this.emailField.getText().toString(),
-                Contact.idCounter
-        );
+    private void setContactDataFromForm() {
+        String name = this.nameField.getText().toString();
+        String phone = this.phoneField.getText().toString();
+        String email = this.emailField.getText().toString();
+
+        this.contact.setName(name);
+        this.contact.setPhone(phone);
+        this.contact.setEmail(email);
     }
 
-    private boolean validateForm(Contact contact) {
-        if (ContactValidatorHelper.isNullOrEmpty(contact.getName())) {
+    private boolean validateForm(Contact newContact) {
+        if (ContactValidatorHelper.isNullOrEmpty(newContact.getName())) {
             Snackbar.make(this.baseView, R.string.empty_name_message , Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return false;
         }
 
-        if (UniquenessContactHelper.isContactsHasName(this.contacts, contact.getName()) && !this.isEdit) {
+        if (this.databaseHelper.userExists(newContact.getName()) && !this.isEdit) {
             Snackbar.make(this.baseView, R.string.not_unique_name_message , Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return false;
         }
 
-        if (!ContactValidatorHelper.isValidPhone(contact.getPhone())) {
+        if (!ContactValidatorHelper.isValidPhone(newContact.getPhone())) {
             Snackbar.make(this.baseView, R.string.incorrect_phone_message , Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return false;
         }
 
-        if(!ContactValidatorHelper.isValidEmail(contact.getEmail())) {
+        if(!ContactValidatorHelper.isValidEmail(newContact.getEmail())) {
             Snackbar.make(this.baseView, R.string.incorrect_email_message, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return false;
@@ -141,19 +149,29 @@ public class NewContactForm extends AppCompatActivity {
         return true;
     }
 
-    private void addContact(Contact contact) {
-        this.contacts.add(contact);
+    private void editContact(Contact contact) {
+        this.databaseHelper.updateContact(contact);
     }
 
-    private void editContact(Contact contact) {
-        this.contacts.get(this.currentIndex).setName(contact.getName());
-        this.contacts.get(this.currentIndex).setPhone(contact.getPhone());
-        this.contacts.get(this.currentIndex).setEmail(contact.getEmail());
+    private void addContact(Contact contact) {
+        contact.setUserID(this.userId);
+        this.databaseHelper.addContact(contact);
     }
 
     private void redirectToContactList() {
-        Intent contactDirectoryIntent = new Intent(NewContactForm.this, ContactDirectory.class);
-        contactDirectoryIntent.putParcelableArrayListExtra("Contacts", this.contacts);
-        startActivity(contactDirectoryIntent);
+        Intent intent = new Intent(NewContactForm.this, ContactDirectory.class);
+        intent.putExtra("UserID", this.userId);
+        startActivity(intent);
+    }
+
+    private Contact getContactById(int id) {
+        this.databaseHelper = new DBHelper(this);
+
+        try {
+            return this.databaseHelper.getContactById(id);
+        } catch (SQLException e) {
+            Toast.makeText(this, R.string.database_error_message, Toast.LENGTH_SHORT).show();
+            return new Contact();
+        }
     }
 }

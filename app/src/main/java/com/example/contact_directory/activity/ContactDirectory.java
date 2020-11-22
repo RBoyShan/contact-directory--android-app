@@ -71,10 +71,7 @@ public class ContactDirectory extends AppCompatActivity {
         try {
             return this.databaseHelper.getContacts(this.userId);
         } catch (SQLException e) {
-            String currentUsername = this.databaseHelper.getUserById(this.userId).getUsername();
-
-            getActionBar().setTitle(currentUsername);
-            getSupportActionBar().setTitle(currentUsername);
+            Toast.makeText(this, R.string.database_error_message, Toast.LENGTH_SHORT).show();
             return new ArrayList<>();
         }
     }

@@ -113,8 +113,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         break;
 
                     case R.id.context_menu_delete:
-                        contacts.remove(currentPosition);
                         databaseHelper.deleteContact(contacts.get(currentPosition).getId());
+                        contacts.remove(currentPosition);
                         notifyDataSetChanged();
                         break;
                 }

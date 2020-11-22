@@ -47,7 +47,11 @@ public class NewContactForm extends AppCompatActivity {
     }
 
     private void initActivity () {
-        if(this.getDataIndex()) {
+        boolean checker = this.getDataIndex();
+
+        this.initDBHelper();
+
+        if(checker) {
             this.contact = this.getContactById(this.contactId);
             this.setValueData(this.contact);
         }
@@ -67,11 +71,7 @@ public class NewContactForm extends AppCompatActivity {
         this.findViewById(R.id.createContactButton).setOnClickListener(view -> {
             this.setContactDataFromForm();
 
-            if(!contact.isNotEmptyObject()) {
-                return;
-            }
-
-            if(this.validateForm(contact)) {
+            if(this.validateForm(this.contact)) {
                 if(this.isEdit)  {
                     this.editContact(this.contact);
                 } else {
@@ -111,6 +111,10 @@ public class NewContactForm extends AppCompatActivity {
         email.setText(contact.getEmail());
     }
 
+    private void initDBHelper() {
+        this.databaseHelper = new DBHelper(this);
+    }
+
     private void setContactDataFromForm() {
         String name = this.nameField.getText().toString();
         String phone = this.phoneField.getText().toString();
@@ -124,12 +128,6 @@ public class NewContactForm extends AppCompatActivity {
     private boolean validateForm(Contact newContact) {
         if (ContactValidatorHelper.isNullOrEmpty(newContact.getName())) {
             Snackbar.make(this.baseView, R.string.empty_name_message , Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            return false;
-        }
-
-        if (this.databaseHelper.userExists(newContact.getName()) && !this.isEdit) {
-            Snackbar.make(this.baseView, R.string.not_unique_name_message , Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return false;
         }
@@ -165,8 +163,6 @@ public class NewContactForm extends AppCompatActivity {
     }
 
     private Contact getContactById(int id) {
-        this.databaseHelper = new DBHelper(this);
-
         try {
             return this.databaseHelper.getContactById(id);
         } catch (SQLException e) {

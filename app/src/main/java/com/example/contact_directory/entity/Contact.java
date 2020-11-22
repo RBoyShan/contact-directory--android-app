@@ -47,12 +47,8 @@ public class Contact implements Parcelable {
         }
     };
 
-    public boolean isNotEmptyObject() {
-        return !TextUtils.isEmpty(this.phone);
-    }
-
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -119,16 +115,5 @@ public class Contact implements Parcelable {
                 this.email,
                 String.valueOf(this.id)
         });
-    }
-
-    @Override
-    public String toString() {
-        return "Contact{" +
-                "name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", id=" + id +
-                ", userID=" + userID +
-                '}';
     }
 }

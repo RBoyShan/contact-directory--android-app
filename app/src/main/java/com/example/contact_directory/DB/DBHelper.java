@@ -212,6 +212,16 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean contactExists(String username) {
+        String sqlQuery = SELECT_ALL + TABLE_CONTACTS + " WHERE name = ?" ;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = database.rawQuery(sqlQuery, new String[] { username });
+
+        return cursor.moveToFirst();
+    }
+
     public void addUser(User user) {
         ContentValues values = new ContentValues();
 
